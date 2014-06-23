@@ -1,0 +1,11 @@
+{
+    "name": "midnight/form-module",
+    "require": {
+        "zendframework/zend-form": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Midnight\\Form\\": "src/"
+        }
+    }
+}
