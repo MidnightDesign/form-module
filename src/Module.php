@@ -1,6 +1,6 @@
 <?php
 
-namespace Midnight\Form;
+namespace Midnight\FormModule;
 
 class Module
 {

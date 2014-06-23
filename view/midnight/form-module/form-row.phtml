@@ -9,19 +9,19 @@
  */
 ?>
 <?php if ($element instanceof \Zend\Form\Element\Radio): ?>
-    <?= $this->render('midnight/form/form-row/radio.phtml') ?>
+    <?= $this->render('midnight/form-module/form-row/radio.phtml') ?>
 <?php elseif ($element instanceof \Zend\Form\Element\MultiCheckbox): ?>
-    <?= $this->render('midnight/form/form-row/multi-checkbox.phtml') ?>
+    <?= $this->render('midnight/form-module/form-row/multi-checkbox.phtml') ?>
 <?php elseif ($element instanceof \Zend\Form\Element\Checkbox): ?>
-    <?= $this->render('midnight/form/form-row/checkbox.phtml') ?>
+    <?= $this->render('midnight/form-module/form-row/checkbox.phtml') ?>
 <?php elseif ($element instanceof \Zend\Form\Element\Select): ?>
-    <?= $this->render('midnight/form/form-row/select.phtml') ?>
+    <?= $this->render('midnight/form-module/form-row/select.phtml') ?>
 <?php elseif ($element instanceof \Zend\Form\Element\File): ?>
-    <?= $this->render('midnight/form/form-row/file.phtml') ?>
+    <?= $this->render('midnight/form-module/form-row/file.phtml') ?>
 <?php elseif ($element instanceof \Zend\Form\Element\Hidden): ?>
     <?= $this->formElement($element) ?>
 <?php elseif ($element instanceof \Zend\Form\Element\Submit): ?>
-    <?= $this->render('midnight/form/form-row/submit.phtml') ?>
+    <?= $this->render('midnight/form-module/form-row/submit.phtml') ?>
 <?php else: ?>
-    <?= $this->render('midnight/form/form-row/default.phtml') ?>
+    <?= $this->render('midnight/form-module/form-row/default.phtml') ?>
 <?php endif ?>

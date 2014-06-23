@@ -10,7 +10,7 @@ return array(
     ),
     'view_helpers' => array(
         'invokables' => array(
-            'formRow' => 'Midnight\Form\View\Helper\FormRow',
+            'formRow' => 'Midnight\FormModule\View\Helper\FormRow',
         ),
     ),
 );
