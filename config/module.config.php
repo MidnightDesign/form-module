@@ -2,7 +2,9 @@
 
 namespace Midnight\Form;
 
-use Midnight\FormModule\View\Helper\FormElementFactory;return [
+use Midnight\FormModule\View\Helper\FormElementFactory;
+
+return [
     'view_manager' => [
         'template_path_stack' => [
             dirname(__DIR__) . '/view',
