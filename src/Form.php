@@ -12,7 +12,7 @@ class Form extends ZendForm
     public function addClass($class)
     {
         $classes = explode(' ', $this->getAttribute('class'));
-        $classes[] = $class;
+        $classes = array_merge($classes, explode(' ', $class));
         $classes = $this->cleanupClasses($classes);
         $this->setAttribute('class', join(' ', $classes));
     }

@@ -2,43 +2,48 @@
 
 namespace Midnight\FormModule\View\Helper;
 
-use InvalidArgumentException;
+use Interop\Container\ContainerInterface;
+use Interop\Container\Exception\ContainerException;
 use Zend\Form\View\Helper\FormElement;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\HelperPluginManager;
+use Zend\ServiceManager\Exception\ServiceNotCreatedException;
+use Zend\ServiceManager\Exception\ServiceNotFoundException;
+use Zend\ServiceManager\Factory\FactoryInterface;
 
 class FormElementFactory implements FactoryInterface
 {
     /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return FormElement
+     * Create an object
+     *
+     * @param  ContainerInterface $container
+     * @param  string $requestedName
+     * @param  null|array $options
+     * @return object
+     * @throws ServiceNotFoundException if unable to resolve the service.
+     * @throws ServiceNotCreatedException if an exception is raised when
+     *     creating a service.
+     * @throws ContainerException if any other error occurs
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        if (!$serviceLocator instanceof HelperPluginManager) {
-            throw new InvalidArgumentException;
-        }
-        $sl = $serviceLocator->getServiceLocator();
         $formElement = new FormElement();
-        $this->injectHelpers($formElement, $sl);
+        $this->injectHelpers($formElement, $container);
         return $formElement;
     }
 
-    private function injectHelpers(FormElement $formElement, ServiceLocatorInterface $sl)
+    private function injectHelpers(FormElement $formElement, ContainerInterface $container)
     {
-        $config = $this->getConfig($sl);
+        $config = $this->getConfig($container);
         foreach ($config as $className => $helper) {
             $formElement->addClass($className, $helper);
         }
     }
 
     /**
-     * @param ServiceLocatorInterface $sl
+     * @param ContainerInterface $container
      * @return array
      */
-    private function getConfig(ServiceLocatorInterface $sl)
+    private function getConfig(ContainerInterface $container)
     {
-        return $sl->get('Config')['midnight']['form_module']['element_view_helpers'];
+        return $container->get('Config')['midnight']['form_module']['element_view_helpers'];
     }
 }
