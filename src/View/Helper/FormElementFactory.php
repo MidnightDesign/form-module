@@ -2,28 +2,12 @@
 
 namespace Midnight\FormModule\View\Helper;
 
-use Interop\Container\ContainerInterface;
-use Interop\Container\Exception\ContainerException;
+use Psr\Container\ContainerInterface;
 use Zend\Form\View\Helper\FormElement;
-use Zend\ServiceManager\Exception\ServiceNotCreatedException;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\Factory\FactoryInterface;
 
-class FormElementFactory implements FactoryInterface
+class FormElementFactory
 {
-    /**
-     * Create an object
-     *
-     * @param  ContainerInterface $container
-     * @param  string $requestedName
-     * @param  null|array $options
-     * @return object
-     * @throws ServiceNotFoundException if unable to resolve the service.
-     * @throws ServiceNotCreatedException if an exception is raised when
-     *     creating a service.
-     * @throws ContainerException if any other error occurs
-     */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormElement
     {
         $formElement = new FormElement();
         $this->injectHelpers($formElement, $container);
@@ -38,11 +22,7 @@ class FormElementFactory implements FactoryInterface
         }
     }
 
-    /**
-     * @param ContainerInterface $container
-     * @return array
-     */
-    private function getConfig(ContainerInterface $container)
+    private function getConfig(ContainerInterface $container): array
     {
         return $container->get('Config')['midnight']['form_module']['element_view_helpers'];
     }
