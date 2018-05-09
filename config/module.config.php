@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Midnight\Form;
 
@@ -10,7 +10,7 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 return [
     'view_manager' => [
         'template_path_stack' => [
-            dirname(__DIR__) . '/view',
+            __DIR__ . '/../view',
         ],
     ],
     'view_helpers' => [

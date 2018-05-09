@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Midnight\FormModule;
 
@@ -8,4 +8,4 @@ class Module
     {
         return include __DIR__ . '/../config/module.config.php';
     }
-} 
+}

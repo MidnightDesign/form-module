@@ -1,13 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace MidnightTest\FormModule;
 
 use Midnight\FormModule\Form;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class FormTest extends PHPUnit_Framework_TestCase
+class FormTest extends TestCase
 {
-    public function addClassData()
+    public function addClassData(): array
     {
         return [
             'single' => ['foo', ['foo']],
@@ -20,21 +20,21 @@ class FormTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $class
      * @param string[] $expectedClasses
-     * @param string|null $initial
      * @dataProvider addClassData
      */
-    public function testAddClass($class, $expectedClasses, $initial = null)
+    public function testAddClass(string $class, array $expectedClasses, string $initial = null)
     {
         $form = new Form();
         $form->setAttribute('class', $initial);
 
         $form->addClass($class);
 
-        $this->assertClassCount(count($expectedClasses), $form->getAttribute('class'));
+        $formClass = $form->getAttribute('class');
+        \assert(\is_string($formClass));
+        $this->assertClassCount(count($expectedClasses), $formClass);
         foreach ($expectedClasses as $expectedClass) {
-            $this->assertHasClass($expectedClass, $form->getAttribute('class'));
+            $this->assertHasClass($expectedClass, $formClass);
         }
     }
 
@@ -47,20 +47,15 @@ class FormTest extends PHPUnit_Framework_TestCase
         $this->assertContains($expected, $this->classArrayFromString($classes));
     }
 
-    /**
-     * @param int $count
-     * @param string $classes
-     */
-    private function assertClassCount($count, $classes)
+    private function assertClassCount(int $count, string $classes)
     {
         $this->assertCount($count, $this->classArrayFromString($classes));
     }
 
     /**
-     * @param string $classes
      * @return string[]
      */
-    private function classArrayFromString($classes)
+    private function classArrayFromString(string $classes): array
     {
         if (trim($classes) === '') {
             return [];

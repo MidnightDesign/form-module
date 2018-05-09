@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Midnight\FormModule;
 
@@ -6,25 +6,21 @@ use Zend\Form\Form as ZendForm;
 
 class Form extends ZendForm
 {
-    /**
-     * @param string $class
-     */
-    public function addClass($class)
+    public function addClass(string $class)
     {
-        $classes = explode(' ', $this->getAttribute('class'));
+        $classes = explode(' ', (string)$this->getAttribute('class'));
         $classes = array_merge($classes, explode(' ', $class));
         $classes = $this->cleanupClasses($classes);
-        $this->setAttribute('class', join(' ', $classes));
+        $this->setAttribute('class', implode(' ', $classes));
     }
 
     /**
      * Removes unnecessary spaces and duplicates
      *
      * @param string[] $classes
-     *
      * @return string[]
      */
-    private function cleanupClasses($classes)
+    private function cleanupClasses(array $classes): array
     {
         foreach ($classes as $index => &$class) {
             $class = trim($class);
@@ -32,7 +28,8 @@ class Form extends ZendForm
                 unset($classes[$index]);
             }
         }
+        unset($class);
         $classes = array_unique($classes);
         return $classes;
     }
-} 
+}
