@@ -3,6 +3,9 @@
 namespace Midnight\Form;
 
 use Midnight\FormModule\View\Helper\FormElementFactory;
+use Midnight\FormModule\View\Helper\FormRow;
+use Zend\Form\View\Helper\FormElement;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'view_manager' => [
@@ -11,11 +14,13 @@ return [
         ],
     ],
     'view_helpers' => [
-        'invokables' => [
-            'formRow' => 'Midnight\FormModule\View\Helper\FormRow',
+        'aliases' => [
+            'formElement' => FormElement::class,
+            'formRow' => FormRow::class,
         ],
         'factories' => [
-            'formElement' => FormElementFactory::class,
+            FormElement::class => FormElementFactory::class,
+            FormRow::class => InvokableFactory::class,
         ],
     ],
     'midnight' => [
