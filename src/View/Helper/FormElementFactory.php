@@ -1,13 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Midnight\FormModule\View\Helper;
 
 use Psr\Container\ContainerInterface;
 use Zend\Form\View\Helper\FormElement;
+use Zend\ServiceManager\AbstractPluginManager;
 
 class FormElementFactory
 {
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormElement
+    public function __invoke(ContainerInterface $container): FormElement
     {
         $formElement = new FormElement();
         $this->injectHelpers($formElement, $container);
@@ -24,6 +25,9 @@ class FormElementFactory
 
     private function getConfig(ContainerInterface $container): array
     {
+        if ($container instanceof AbstractPluginManager) {
+            return $this->getConfig($container->getServiceLocator());
+        }
         return $container->get('Config')['midnight']['form_module']['element_view_helpers'];
     }
 }

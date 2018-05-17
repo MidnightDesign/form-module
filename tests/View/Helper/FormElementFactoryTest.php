@@ -1,30 +1,69 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace MidnightTest\FormModule\View\Helper;
 
-use Midnight\FormModule\Module;
 use Midnight\FormModule\View\Helper\FormElementFactory;
-use PHPUnit_Framework_TestCase;
+use MidnightTest\FormModule\AbstractTestCase;
+use ReflectionObject;
 use Zend\Form\View\Helper\FormElement;
 use Zend\ServiceManager\ServiceManager;
 
-class FormElementFactoryTest extends PHPUnit_Framework_TestCase
+class FormElementFactoryTest extends AbstractTestCase
 {
+    /** @var FormElementFactory */
+    private $factory;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->factory = new FormElementFactory();
+    }
+
     public function testCreate()
     {
-        $factory = new FormElementFactory();
-        $formElement = $factory->__invoke($this->createServiceManager(), 'formElement');
+        $formElement = ($this->factory)($this->createServiceManager());
 
         $this->assertInstanceOf(FormElement::class, $formElement);
     }
 
-    /**
-     * @return ServiceManager
-     */
-    private function createServiceManager()
+    public function testViewHelperIsInjected()
     {
-        $serviceManager = new ServiceManager();
-        $serviceManager->setService('Config', (new Module)->getConfig());
-        return $serviceManager;
+        $sm = $this->createServiceManager();
+        $this->injectDummyElement($sm);
+
+        /** @var FormElement $formElement */
+        $formElement = ($this->factory)($sm);
+
+        $classMap = $this->getProperty($formElement, 'classMap');
+        $this->assertArrayHasKey(DummyElement::class, $classMap);
+    }
+
+    private function injectDummyElement(ServiceManager $serviceManager)
+    {
+        $serviceManager->setAllowOverride(true);
+        $config = $serviceManager->get('Config');
+        $config = array_merge(
+            $config,
+            [
+                'midnight' => [
+                    'form_module' => [
+                        'element_view_helpers' => [
+                            DummyElement::class => 'forminput',
+                        ],
+                    ],
+                ],
+            ]
+        );
+        $serviceManager->setService('Config', $config);
+    }
+
+    private function getProperty($object, string $property)
+    {
+        $reflectionObject = new ReflectionObject($object);
+        $reflectionProperty = $reflectionObject->getProperty($property);
+        $reflectionProperty->setAccessible(true);
+        $value = $reflectionProperty->getValue($object);
+        $reflectionProperty->setAccessible(false);
+        return $value;
     }
 }
