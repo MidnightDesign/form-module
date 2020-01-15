@@ -1,12 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Midnight\FormModule;
 
-use Zend\Form\Form as ZendForm;
+use Laminas\Form\Form as LaminasForm;
 
-class Form extends ZendForm
+class Form extends LaminasForm
 {
-    public function addClass(string $class)
+    public function addClass(string $class): void
     {
         $classes = explode(' ', (string)$this->getAttribute('class'));
         $classes = array_merge($classes, explode(' ', $class));
@@ -24,9 +26,10 @@ class Form extends ZendForm
     {
         foreach ($classes as $index => &$class) {
             $class = trim($class);
-            if (empty($class)) {
-                unset($classes[$index]);
+            if ($class !== '') {
+                continue;
             }
+            unset($classes[$index]);
         }
         unset($class);
         $classes = array_unique($classes);

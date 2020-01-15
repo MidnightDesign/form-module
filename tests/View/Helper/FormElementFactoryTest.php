@@ -1,32 +1,34 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace MidnightTest\FormModule\View\Helper;
 
+use Laminas\Form\View\Helper\FormElement;
+use Laminas\ServiceManager\ServiceManager;
 use Midnight\FormModule\View\Helper\FormElementFactory;
 use MidnightTest\FormModule\AbstractTestCase;
 use ReflectionObject;
-use Zend\Form\View\Helper\FormElement;
-use Zend\ServiceManager\ServiceManager;
 
 class FormElementFactoryTest extends AbstractTestCase
 {
     /** @var FormElementFactory */
     private $factory;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->factory = new FormElementFactory();
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $formElement = ($this->factory)($this->createServiceManager());
 
-        $this->assertInstanceOf(FormElement::class, $formElement);
+        self::assertInstanceOf(FormElement::class, $formElement);
     }
 
-    public function testViewHelperIsInjected()
+    public function testViewHelperIsInjected(): void
     {
         $sm = $this->createServiceManager();
         $this->injectDummyElement($sm);
@@ -35,10 +37,10 @@ class FormElementFactoryTest extends AbstractTestCase
         $formElement = ($this->factory)($sm);
 
         $classMap = $this->getProperty($formElement, 'classMap');
-        $this->assertArrayHasKey(DummyElement::class, $classMap);
+        self::assertArrayHasKey(DummyElement::class, $classMap);
     }
 
-    private function injectDummyElement(ServiceManager $serviceManager)
+    private function injectDummyElement(ServiceManager $serviceManager): void
     {
         $serviceManager->setAllowOverride(true);
         $config = $serviceManager->get('Config');
@@ -57,7 +59,10 @@ class FormElementFactoryTest extends AbstractTestCase
         $serviceManager->setService('Config', $config);
     }
 
-    private function getProperty($object, string $property)
+    /**
+     * @return mixed
+     */
+    private function getProperty(object $object, string $property)
     {
         $reflectionObject = new ReflectionObject($object);
         $reflectionProperty = $reflectionObject->getProperty($property);

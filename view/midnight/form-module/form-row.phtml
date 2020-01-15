@@ -1,26 +1,36 @@
 <?php
 /**
- * @var \Zend\View\Renderer\PhpRenderer $this
- * @var \Zend\Form\ElementInterface     $element
- * @var string                          $label
- * @var array                           $labelAttributes
- * @var string                          $labelPosition
- * @var bool                            $renderErrors
+ * @var PhpRenderer $this
+ * @var ElementInterface $element
+ * @var string $label
+ * @var array $labelAttributes
+ * @var string $labelPosition
+ * @var bool $renderErrors
  */
+
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Element\MultiCheckbox;
+use Laminas\Form\Element\Radio;
+use Laminas\Form\Element\Select;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\ElementInterface;
+use Laminas\View\Renderer\PhpRenderer;
+
 ?>
-<?php if ($element instanceof \Zend\Form\Element\Radio): ?>
+<?php if ($element instanceof Radio): ?>
     <?= $this->render('midnight/form-module/form-row/radio.phtml') ?>
-<?php elseif ($element instanceof \Zend\Form\Element\MultiCheckbox): ?>
+<?php elseif ($element instanceof MultiCheckbox): ?>
     <?= $this->render('midnight/form-module/form-row/multi-checkbox.phtml') ?>
-<?php elseif ($element instanceof \Zend\Form\Element\Checkbox): ?>
+<?php elseif ($element instanceof Checkbox): ?>
     <?= $this->render('midnight/form-module/form-row/checkbox.phtml') ?>
-<?php elseif ($element instanceof \Zend\Form\Element\Select): ?>
+<?php elseif ($element instanceof Select): ?>
     <?= $this->render('midnight/form-module/form-row/select.phtml') ?>
-<?php elseif ($element instanceof \Zend\Form\Element\File): ?>
+<?php elseif ($element instanceof \Laminas\Form\Element\File): ?>
     <?= $this->render('midnight/form-module/form-row/file.phtml') ?>
-<?php elseif ($element instanceof \Zend\Form\Element\Hidden): ?>
+<?php elseif ($element instanceof Hidden): ?>
     <?= $this->formElement($element) ?>
-<?php elseif ($element instanceof \Zend\Form\Element\Submit): ?>
+<?php elseif ($element instanceof Submit): ?>
     <?= $this->render('midnight/form-module/form-row/submit.phtml') ?>
 <?php else: ?>
     <?= $this->render('midnight/form-module/form-row/default.phtml') ?>

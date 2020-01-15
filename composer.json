@@ -1,23 +1,32 @@
 {
     "name": "midnight/form-module",
-    "license": "MIT",
     "type": "library",
     "description": "Zend Framework 2 module for better form markup",
+    "license": "MIT",
     "require": {
-        "php": "^7.0",
-        "psr/container": "^1.0",
-        "zendframework/zend-form": "^2.7",
-        "zendframework/zend-i18n": "^2.8",
-        "zendframework/zend-servicemanager": "^2.7 || ^3.0",
-        "zendframework/zend-view": "^2.6"
+        "php": "^7.2",
+        "laminas/laminas-form": "^2.7",
+        "laminas/laminas-i18n": "^2.8",
+        "laminas/laminas-servicemanager": "^2.7 || ^3.0",
+        "laminas/laminas-view": "^2.6",
+        "psr/container": "^1.0"
     },
     "require-dev": {
-        "infection/infection": "^0.8.2",
-        "maglnet/composer-require-checker": "^0.2.1",
-        "phpstan/phpstan": "^0.9.2",
-        "phpstan/phpstan-strict-rules": "^0.9.0",
-        "phpunit/phpunit": "^7.1",
-        "squizlabs/php_codesniffer": "^3.2"
+        "eventjet/coding-standard": "^3.1",
+        "infection/infection": "^0.15.0",
+        "maglnet/composer-require-checker": "^2.1",
+        "phpstan/extension-installer": "^1.0",
+        "phpstan/phpstan": "^0.12.5",
+        "phpstan/phpstan-strict-rules": "^0.12.1",
+        "phpunit/phpunit": "^8.5"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laminas": {
+            "module": "Midnight\\FormModule"
+        }
     },
     "autoload": {
         "psr-4": {
@@ -29,27 +38,19 @@
             "MidnightTest\\FormModule\\": "tests/"
         }
     },
-    "extra": {
-        "zf": {
-            "module": "Midnight\\FormModule"
-        }
-    },
-    "config": {
-        "sort-packages": true
-    },
     "scripts": {
+        "check": [
+            "@cs-check",
+            "@check-deps",
+            "@phpstan",
+            "@phpunit",
+            "@infection"
+        ],
         "check-deps": "vendor/bin/composer-require-checker",
         "cs-check": "vendor/bin/phpcs",
         "cs-fix": "vendor/bin/phpcbf",
-        "infection": "vendor/bin/infection --min-msi=100 --min-covered-msi=100 --log-verbosity=2",
-        "phpstan": "vendor/bin/phpstan analyse src/ --level 7 -c phpstan.neon",
-        "phpunit": "vendor/bin/phpunit",
-        "check": [
-            "@check-deps",
-            "@infection",
-            "@phpstan",
-            "@phpunit",
-            "@cs-check"
-        ]
+        "infection": "vendor/bin/infection --min-msi=93 --min-covered-msi=93",
+        "phpstan": "vendor/bin/phpstan analyse",
+        "phpunit": "vendor/bin/phpunit"
     }
 }
