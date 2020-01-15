@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Midnight\FormModule\View\Helper;
 
-use Zend\Form\View\Helper\FormRow as ZendFormRow;
+use Laminas\Form\View\Helper\FormRow as LaminasFormRow;
 
-class FormRow extends ZendFormRow
+class FormRow extends LaminasFormRow
 {
     public function __construct()
     {

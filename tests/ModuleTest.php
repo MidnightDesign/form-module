@@ -1,45 +1,51 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace MidnightTest\FormModule;
 
+use Laminas\Form\View\Helper\FormElement;
+use Laminas\ServiceManager\Factory\InvokableFactory;
+use Laminas\View\HelperPluginManager;
 use Midnight\FormModule\Module;
 use Midnight\FormModule\View\Helper\FormElementFactory;
 use Midnight\FormModule\View\Helper\FormRow;
-use Zend\Form\View\Helper\FormElement;
-use Zend\ServiceManager\Factory\InvokableFactory;
-use Zend\View\HelperPluginManager;
 
 class ModuleTest extends AbstractTestCase
 {
-    public function testConfig()
+    public function testConfig(): void
     {
         $module = new Module();
 
         $config = $module->getConfig();
 
-        $this->assertSame(realpath(__DIR__ . '/../view'), realpath($config['view_manager']['template_path_stack'][0]));
+        self::assertSame(realpath(__DIR__ . '/../view'), realpath($config['view_manager']['template_path_stack'][0]));
         $viewHelpersConfig = $config['view_helpers'];
-        $this->assertSame(FormElement::class, $viewHelpersConfig['aliases']['formElement']);
-        $this->assertSame(FormRow::class, $viewHelpersConfig['aliases']['formRow']);
-        $this->assertSame(FormElementFactory::class, $viewHelpersConfig['factories'][FormElement::class]);
-        $this->assertSame(InvokableFactory::class, $viewHelpersConfig['factories'][FormRow::class]);
+        self::assertSame(FormElement::class, $viewHelpersConfig['aliases']['formElement']);
+        self::assertSame(FormRow::class, $viewHelpersConfig['aliases']['formRow']);
+        self::assertSame(FormElementFactory::class, $viewHelpersConfig['factories'][FormElement::class]);
+        self::assertSame(InvokableFactory::class, $viewHelpersConfig['factories'][FormRow::class]);
         $elementViewHelpersConfig = $config['midnight']['form_module']['element_view_helpers'];
-        $this->assertInternalType('array', $elementViewHelpersConfig);
-        $this->assertCount(0, $elementViewHelpersConfig);
+        self::assertIsArray($elementViewHelpersConfig);
+        self::assertCount(0, $elementViewHelpersConfig);
     }
 
     /**
+     * @psalm-param class-string<object> $expected
      * @dataProvider helpersDataProvider
      */
-    public function testViewHelpersAreRegisteredCorrectly($requested, $expected)
+    public function testViewHelpersAreRegisteredCorrectly(string $requested, string $expected): void
     {
         $helperManager = $this->createHelperPluginManager();
 
         $helper = $helperManager->get($requested);
 
-        $this->assertInstanceOf($expected, $helper);
+        self::assertInstanceOf($expected, $helper);
     }
 
+    /**
+     * @return array<int, array<int, string>>
+     */
     public function helpersDataProvider(): array
     {
         return [

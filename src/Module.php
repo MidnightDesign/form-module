@@ -1,10 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Midnight\FormModule;
 
 class Module
 {
-    public function getConfig()
+    /**
+     * @return mixed[]
+     */
+    public function getConfig(): array
     {
         return include __DIR__ . '/../config/module.config.php';
     }

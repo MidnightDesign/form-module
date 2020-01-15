@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Midnight\FormModule\View\Helper;
 
+use Laminas\Form\View\Helper\FormElement;
+use Laminas\ServiceManager\AbstractPluginManager;
 use Psr\Container\ContainerInterface;
-use Zend\Form\View\Helper\FormElement;
-use Zend\ServiceManager\AbstractPluginManager;
 
 class FormElementFactory
 {
@@ -15,7 +17,7 @@ class FormElementFactory
         return $formElement;
     }
 
-    private function injectHelpers(FormElement $formElement, ContainerInterface $container)
+    private function injectHelpers(FormElement $formElement, ContainerInterface $container): void
     {
         $config = $this->getConfig($container);
         foreach ($config as $className => $helper) {
@@ -23,6 +25,9 @@ class FormElementFactory
         }
     }
 
+    /**
+     * @return mixed[]
+     */
     private function getConfig(ContainerInterface $container): array
     {
         if ($container instanceof AbstractPluginManager) {

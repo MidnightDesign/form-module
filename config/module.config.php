@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Midnight\Form;
 
+use Laminas\Form\View\Helper\FormElement;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 use Midnight\FormModule\View\Helper\FormElementFactory;
 use Midnight\FormModule\View\Helper\FormRow;
-use Zend\Form\View\Helper\FormElement;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'view_manager' => [

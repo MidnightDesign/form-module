@@ -1,17 +1,26 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace MidnightTest\FormModule;
 
 use Midnight\FormModule\Form;
 use PHPUnit\Framework\TestCase;
 
+use function assert;
+use function is_string;
+
 class FormTest extends TestCase
 {
+    /**
+     * @return array<string, array<int,string|array>>
+     */
     public function addClassData(): array
     {
         return [
             'single' => ['foo', ['foo']],
             'multiple' => ['foo bar', ['foo', 'bar']],
+            'multiple with tab' => ["foo \tbar ", ['foo', 'bar']],
             'duplicate' => ['foo bar foo', ['foo', 'bar']],
             'duplicate 2' => ['foo bar foo', ['foo', 'bar'], 'bar foo'],
             'empty' => ['', []],
@@ -23,7 +32,7 @@ class FormTest extends TestCase
      * @param string[] $expectedClasses
      * @dataProvider addClassData
      */
-    public function testAddClass(string $class, array $expectedClasses, string $initial = null)
+    public function testAddClass(string $class, array $expectedClasses, ?string $initial = null): void
     {
         $form = new Form();
         $form->setAttribute('class', $initial);
@@ -31,25 +40,21 @@ class FormTest extends TestCase
         $form->addClass($class);
 
         $formClass = $form->getAttribute('class');
-        \assert(\is_string($formClass));
+        assert(is_string($formClass));
         $this->assertClassCount(count($expectedClasses), $formClass);
         foreach ($expectedClasses as $expectedClass) {
             $this->assertHasClass($expectedClass, $formClass);
         }
     }
 
-    /**
-     * @param string $expected
-     * @param string $classes
-     */
-    private function assertHasClass($expected, $classes)
+    private function assertHasClass(string $expected, string $classes): void
     {
-        $this->assertContains($expected, $this->classArrayFromString($classes));
+        self::assertContains($expected, $this->classArrayFromString($classes));
     }
 
-    private function assertClassCount(int $count, string $classes)
+    private function assertClassCount(int $count, string $classes): void
     {
-        $this->assertCount($count, $this->classArrayFromString($classes));
+        self::assertCount($count, $this->classArrayFromString($classes));
     }
 
     /**

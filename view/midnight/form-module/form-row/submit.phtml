@@ -1,12 +1,16 @@
 <?php
 /**
- * @var \Zend\View\Renderer\PhpRenderer $this
- * @var \Zend\Form\ElementInterface     $element
- * @var string                          $label
- * @var array                           $labelAttributes
- * @var string                          $labelPosition
- * @var bool                            $renderErrors
+ * @var PhpRenderer $this
+ * @var ElementInterface $element
+ * @var string $label
+ * @var array $labelAttributes
+ * @var string $labelPosition
+ * @var bool $renderErrors
  */
+
+use Laminas\Form\ElementInterface;
+use Laminas\View\Renderer\PhpRenderer;
+
 ?>
 <div class="form-row submit">
     <?= $this->formSubmit($element) ?>
