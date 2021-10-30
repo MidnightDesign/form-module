@@ -10,10 +10,11 @@ use Midnight\FormModule\View\Helper\FormElementFactory;
 use MidnightTest\FormModule\AbstractTestCase;
 use ReflectionObject;
 
+use function array_merge;
+
 class FormElementFactoryTest extends AbstractTestCase
 {
-    /** @var FormElementFactory */
-    private $factory;
+    private FormElementFactory $factory;
 
     protected function setUp(): void
     {
@@ -33,7 +34,6 @@ class FormElementFactoryTest extends AbstractTestCase
         $sm = $this->createServiceManager();
         $this->injectDummyElement($sm);
 
-        /** @var FormElement $formElement */
         $formElement = ($this->factory)($sm);
 
         $classMap = $this->getProperty($formElement, 'classMap');
@@ -43,7 +43,7 @@ class FormElementFactoryTest extends AbstractTestCase
     private function injectDummyElement(ServiceManager $serviceManager): void
     {
         $serviceManager->setAllowOverride(true);
-        $config = $serviceManager->get('Config');
+        $config = $serviceManager->get('config');
         $config = array_merge(
             $config,
             [
@@ -56,7 +56,7 @@ class FormElementFactoryTest extends AbstractTestCase
                 ],
             ]
         );
-        $serviceManager->setService('Config', $config);
+        $serviceManager->setService('config', $config);
     }
 
     /**

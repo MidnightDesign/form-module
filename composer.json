@@ -1,24 +1,24 @@
 {
     "name": "midnight/form-module",
     "type": "library",
-    "description": "Zend Framework 2 module for better form markup",
+    "description": "Laminas module for better form markup",
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "^7.4 || ^8.0",
         "laminas/laminas-form": "^2.7",
         "laminas/laminas-i18n": "^2.8",
-        "laminas/laminas-servicemanager": "^2.7 || ^3.0",
+        "laminas/laminas-servicemanager": "^3.0",
         "laminas/laminas-view": "^2.6",
-        "psr/container": "^1.0"
+        "psr/container": "^1.1 || ^2.0"
     },
     "require-dev": {
-        "eventjet/coding-standard": "^3.1",
-        "infection/infection": "^0.15.0",
-        "maglnet/composer-require-checker": "^2.1",
+        "eventjet/coding-standard": "^3.7",
+        "infection/infection": "^0.25.0",
+        "maglnet/composer-require-checker": "^3.3",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^0.12.5",
         "phpstan/phpstan-strict-rules": "^0.12.1",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^9.5"
     },
     "config": {
         "sort-packages": true
@@ -49,7 +49,7 @@
         "check-deps": "vendor/bin/composer-require-checker",
         "cs-check": "vendor/bin/phpcs",
         "cs-fix": "vendor/bin/phpcbf",
-        "infection": "vendor/bin/infection --min-msi=93 --min-covered-msi=93",
+        "infection": "vendor/bin/infection",
         "phpstan": "vendor/bin/phpstan analyse",
         "phpunit": "vendor/bin/phpunit"
     }

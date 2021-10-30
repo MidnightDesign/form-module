@@ -6,6 +6,12 @@ namespace Midnight\FormModule;
 
 use Laminas\Form\Form as LaminasForm;
 
+use function array_merge;
+use function array_unique;
+use function explode;
+use function implode;
+use function trim;
+
 class Form extends LaminasForm
 {
     public function addClass(string $class): void
@@ -19,8 +25,8 @@ class Form extends LaminasForm
     /**
      * Removes unnecessary spaces and duplicates
      *
-     * @param string[] $classes
-     * @return string[]
+     * @param array<array-key, string> $classes
+     * @return array<array-key, string>
      */
     private function cleanupClasses(array $classes): array
     {

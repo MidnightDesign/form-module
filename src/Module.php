@@ -7,7 +7,7 @@ namespace Midnight\FormModule;
 class Module
 {
     /**
-     * @return mixed[]
+     * @return array<string, mixed>
      */
     public function getConfig(): array
     {

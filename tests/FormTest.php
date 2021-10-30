@@ -8,7 +8,10 @@ use Midnight\FormModule\Form;
 use PHPUnit\Framework\TestCase;
 
 use function assert;
+use function count;
+use function explode;
 use function is_string;
+use function trim;
 
 class FormTest extends TestCase
 {
@@ -29,7 +32,7 @@ class FormTest extends TestCase
     }
 
     /**
-     * @param string[] $expectedClasses
+     * @param list<string> $expectedClasses
      * @dataProvider addClassData
      */
     public function testAddClass(string $class, array $expectedClasses, ?string $initial = null): void
@@ -58,7 +61,7 @@ class FormTest extends TestCase
     }
 
     /**
-     * @return string[]
+     * @return list<string>
      */
     private function classArrayFromString(string $classes): array
     {

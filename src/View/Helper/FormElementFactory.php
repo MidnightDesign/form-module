@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Midnight\FormModule\View\Helper;
 
 use Laminas\Form\View\Helper\FormElement;
-use Laminas\ServiceManager\AbstractPluginManager;
 use Psr\Container\ContainerInterface;
 
 class FormElementFactory
@@ -26,13 +25,10 @@ class FormElementFactory
     }
 
     /**
-     * @return mixed[]
+     * @return array<string, mixed>
      */
     private function getConfig(ContainerInterface $container): array
     {
-        if ($container instanceof AbstractPluginManager) {
-            return $this->getConfig($container->getServiceLocator());
-        }
-        return $container->get('Config')['midnight']['form_module']['element_view_helpers'];
+        return $container->get('config')['midnight']['form_module']['element_view_helpers'];
     }
 }

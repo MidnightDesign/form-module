@@ -11,6 +11,8 @@ use Midnight\FormModule\Module;
 use Midnight\FormModule\View\Helper\FormElementFactory;
 use Midnight\FormModule\View\Helper\FormRow;
 
+use function realpath;
+
 class ModuleTest extends AbstractTestCase
 {
     public function testConfig(): void
@@ -60,7 +62,7 @@ class ModuleTest extends AbstractTestCase
     {
         $sm = $this->createServiceManager();
         $pluginManager = new HelperPluginManager($sm);
-        $config = $sm->get('Config');
+        $config = $sm->get('config');
         foreach ($config['view_helpers']['factories'] as $helper => $factory) {
             $pluginManager->setFactory($helper, $factory);
         }
