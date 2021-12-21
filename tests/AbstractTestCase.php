@@ -13,7 +13,7 @@ class AbstractTestCase extends TestCase
     protected function createServiceManager(): ServiceManager
     {
         $serviceManager = new ServiceManager();
-        $serviceManager->setService('Config', (new Module())->getConfig());
+        $serviceManager->setService('config', (new Module())->getConfig());
         return $serviceManager;
     }
 }
