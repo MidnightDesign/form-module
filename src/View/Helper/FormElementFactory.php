@@ -25,10 +25,12 @@ class FormElementFactory
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, string>
      */
     private function getConfig(ContainerInterface $container): array
     {
-        return $container->get('config')['midnight']['form_module']['element_view_helpers'];
+        /** @var array{midnight: array{form_module: array{element_view_helpers: array<string, string>}}} $config */
+        $config = $container->get('config');
+        return $config['midnight']['form_module']['element_view_helpers'];
     }
 }

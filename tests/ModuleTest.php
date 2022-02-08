@@ -21,12 +21,16 @@ class ModuleTest extends AbstractTestCase
 
         $config = $module->getConfig();
 
+        self::assertIsArray($config['view_manager']);
         self::assertSame(realpath(__DIR__ . '/../view'), realpath($config['view_manager']['template_path_stack'][0]));
         $viewHelpersConfig = $config['view_helpers'];
+        self::assertIsArray($viewHelpersConfig);
         self::assertSame(FormElement::class, $viewHelpersConfig['aliases']['formElement']);
         self::assertSame(FormRow::class, $viewHelpersConfig['aliases']['formRow']);
         self::assertSame(FormElementFactory::class, $viewHelpersConfig['factories'][FormElement::class]);
         self::assertSame(InvokableFactory::class, $viewHelpersConfig['factories'][FormRow::class]);
+        self::assertIsArray($config['midnight']);
+        self::assertIsArray($config['midnight']['form_module']);
         $elementViewHelpersConfig = $config['midnight']['form_module']['element_view_helpers'];
         self::assertIsArray($elementViewHelpersConfig);
         self::assertCount(0, $elementViewHelpersConfig);
@@ -62,6 +66,7 @@ class ModuleTest extends AbstractTestCase
     {
         $sm = $this->createServiceManager();
         $pluginManager = new HelperPluginManager($sm);
+        /** @var array{view_helpers: array{factories: array<string, string>, aliases: array<string, string>}} $config */
         $config = $sm->get('config');
         foreach ($config['view_helpers']['factories'] as $helper => $factory) {
             $pluginManager->setFactory($helper, $factory);

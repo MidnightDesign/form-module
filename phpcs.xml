@@ -3,6 +3,7 @@
     <rule ref="EventjetStrict"/>
 
     <arg name="extensions" value="php,dist"/>
+    <config name="php_version" value="70400"/>
 
     <file>config</file>
     <file>src</file>
