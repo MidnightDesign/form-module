@@ -8,6 +8,9 @@ jobs:
     strategy:
       matrix:
         php: ["7.4", "8.0", "8.1"]
+        composer_flags:
+          - '--prefer-lowest'
+          - ''
 
     runs-on: ubuntu-latest
     container:
@@ -35,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer update --no-progress --no-interaction ${{ matrix.composer_args }} > /dev/null
+          composer update --no-progress --no-interaction ${{ matrix.composer_flags }} > /dev/null
 
       - name: Static analysis
         run: |
