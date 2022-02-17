@@ -29,7 +29,8 @@ final class FormRowTest extends TestCase
         $renderer = (new PhpRenderer())
             ->setResolver($resolver)
             ->setHelperPluginManager($pluginManager);
-        $this->helper = (new FormRow())->setView($renderer);
+        $this->helper = new FormRow();
+        $this->helper->setView($renderer);
     }
 
     public function testRenderElement(): void
