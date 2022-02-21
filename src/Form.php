@@ -16,7 +16,9 @@ class Form extends LaminasForm
 {
     public function addClass(string $class): void
     {
-        $classes = explode(' ', (string)$this->getAttribute('class'));
+        /** @var string|null $attribute */
+        $attribute = $this->getAttribute('class');
+        $classes = explode(' ', (string)$attribute);
         $classes = array_merge($classes, explode(' ', $class));
         $classes = $this->cleanupClasses($classes);
         $this->setAttribute('class', implode(' ', $classes));

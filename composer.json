@@ -1,32 +1,26 @@
 {
     "name": "midnight/form-module",
-    "type": "library",
     "description": "Laminas module for better form markup",
     "license": "MIT",
+    "type": "library",
     "require": {
         "php": "^7.4 || ^8.0",
-        "laminas/laminas-form": "^2.7",
+        "laminas/laminas-form": "^2.8 || ^3.0",
         "laminas/laminas-i18n": "^2.8",
-        "laminas/laminas-servicemanager": "^3.0",
+        "laminas/laminas-servicemanager": "^3.3",
         "laminas/laminas-view": "^2.6",
         "psr/container": "^1.1 || ^2.0"
     },
     "require-dev": {
-        "eventjet/coding-standard": "^3.7",
-        "infection/infection": "^0.25.0",
-        "maglnet/composer-require-checker": "^3.3",
+        "eventjet/coding-standard": "^3.7.1",
+        "infection/infection": "^0.26.0",
+        "laminas/laminas-escaper": "^2.9",
+        "maglnet/composer-require-checker": "^3.3 || ^4.0",
         "phpstan/extension-installer": "^1.0",
-        "phpstan/phpstan": "^0.12.5",
-        "phpstan/phpstan-strict-rules": "^0.12.1",
-        "phpunit/phpunit": "^9.5"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "laminas": {
-            "module": "Midnight\\FormModule"
-        }
+        "phpstan/phpstan": "^1.4",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpstan/phpstan-strict-rules": "^1.0",
+        "phpunit/phpunit": "^9.5.5"
     },
     "autoload": {
         "psr-4": {
@@ -36,6 +30,19 @@
     "autoload-dev": {
         "psr-4": {
             "MidnightTest\\FormModule\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "infection/extension-installer": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "laminas": {
+            "module": "Midnight\\FormModule"
         }
     },
     "scripts": {
@@ -50,6 +57,7 @@
         "cs-check": "vendor/bin/phpcs",
         "cs-fix": "vendor/bin/phpcbf",
         "infection": "vendor/bin/infection",
+        "infection-diff": "@composer run --timeout=0 infection -- --git-diff-base=origin/master --git-diff-filter=A --min-msi=100 --min-covered-msi=100",
         "phpstan": "vendor/bin/phpstan analyse",
         "phpunit": "vendor/bin/phpunit"
     }

@@ -26,6 +26,7 @@ class FormElementFactoryTest extends AbstractTestCase
     {
         $formElement = ($this->factory)($this->createServiceManager());
 
+        /** @phpstan-ignore-next-line smoke test */
         self::assertInstanceOf(FormElement::class, $formElement);
     }
 
@@ -37,12 +38,14 @@ class FormElementFactoryTest extends AbstractTestCase
         $formElement = ($this->factory)($sm);
 
         $classMap = $this->getProperty($formElement, 'classMap');
+        self::assertIsArray($classMap);
         self::assertArrayHasKey(DummyElement::class, $classMap);
     }
 
     private function injectDummyElement(ServiceManager $serviceManager): void
     {
         $serviceManager->setAllowOverride(true);
+        /** @var array<string, mixed> $config */
         $config = $serviceManager->get('config');
         $config = array_merge(
             $config,
